@@ -4,7 +4,7 @@ set dt = date /T
 
 
 @echo off
-REM ADD COMMENTS '20 ck
+REM ADD COMMENTS '20 ck YEAH
 set RESTVAR=%1
 shift
 :loop1
