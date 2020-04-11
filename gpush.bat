@@ -2,7 +2,9 @@ git add *
 git status
 set dt = date /T
 
+
 @echo off
+REM ADD COMMENTS
 set RESTVAR=%1
 shift
 :loop1
