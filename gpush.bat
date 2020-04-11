@@ -14,5 +14,5 @@ goto loop1
 :after_loop
 echo %RESTVAR%
 
-git commit -m "%USERNAME% %date% %time% %1 %RESTVAR%"
+git commit -m "%USERNAME% %date% %time%  %1 %RESTVAR%"
 git push 
