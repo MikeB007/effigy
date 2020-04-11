@@ -1,0 +1,4 @@
+git add *
+set dt = date /T
+git commit -m '%date%'
+git push 
