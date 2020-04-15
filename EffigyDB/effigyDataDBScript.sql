@@ -88,21 +88,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `effigy`.`media_type`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `effigy`.`media_type` ;
-
-CREATE TABLE IF NOT EXISTS `effigy`.`media_type` (
-  `TYPE_ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `MEDIA DESC` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`TYPE_ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`TYPE_ID` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `effigy`.`supported_ext`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `effigy`.`supported_ext` ;
@@ -115,6 +100,21 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `effigy`.`media_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `effigy`.`media_type` ;
+
+CREATE TABLE IF NOT EXISTS `effigy`.`media_type` (
+  `MEDIA_TYPE_ID` VARCHAR(1) NOT NULL,
+  `MEDIA DESC` VARCHAR(45) NULL,
+  PRIMARY KEY (`MEDIA_TYPE_ID`),
+  UNIQUE INDEX `ID_UNIQUE` (`MEDIA_TYPE_ID` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `effigy`.`media`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `effigy`.`media` ;
@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `effigy`.`media` ;
 CREATE TABLE IF NOT EXISTS `effigy`.`media` (
   `MEDIA_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(100) NOT NULL,
-  `TYPE_ID` INT(11) NOT NULL,
+  `MEDIA_TYPE_ID` VARCHAR(1) NOT NULL,
   `FOLDER_ID` INT(11) NOT NULL,
   `PATH` VARCHAR(500) NOT NULL,
   `PARENT_FOLDER_ID` INT(11) NOT NULL,
@@ -136,25 +136,15 @@ CREATE TABLE IF NOT EXISTS `effigy`.`media` (
   `INSERTED_DT` DATE NOT NULL,
   PRIMARY KEY (`MEDIA_ID`),
   UNIQUE INDEX `ID_UNIQUE` (`MEDIA_ID` ASC) VISIBLE,
-  INDEX `attrib_idx` (`ATRIB_ID` ASC) VISIBLE,
-  INDEX `FK_TYPE_ID_idx` (`TYPE_ID` ASC) VISIBLE,
-  INDEX `FP_FOLDER_ID_idx` (`FOLDER_ID` ASC) VISIBLE,
+  INDEX `attrib_idx` (`ATRIB_ID` ASC) INVISIBLE,
   INDEX `FP_PARENT_FOLDER_ID_idx` (`PARENT_FOLDER_ID` ASC) VISIBLE,
   INDEX `FP_EXTENSION_idx` (`EXTENSION` ASC) VISIBLE,
+  INDEX `FK_MEDIA_TYPE_ID_idx` (`MEDIA_TYPE_ID` ASC) VISIBLE,
+  INDEX `FK_FOLDER_ID_idx` (`FOLDER_ID` ASC) VISIBLE,
   CONSTRAINT `FK_MEDIA_ATRIB`
     FOREIGN KEY (`ATRIB_ID`)
     REFERENCES `effigy`.`attrib` (`ATRIB_ID`),
-  CONSTRAINT `FK_TYPE_ID`
-    FOREIGN KEY (`TYPE_ID`)
-    REFERENCES `effigy`.`media_type` (`TYPE_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FP_FOLDER_ID`
-    FOREIGN KEY (`FOLDER_ID`)
-    REFERENCES `effigy`.`loc_folder` (`FOLDER_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FP_PARENT_FOLDER_ID`
+  CONSTRAINT `FK_PARENT_FOLDER_ID`
     FOREIGN KEY (`PARENT_FOLDER_ID`)
     REFERENCES `effigy`.`loc_folder` (`FOLDER_ID`)
     ON DELETE NO ACTION
@@ -162,6 +152,16 @@ CREATE TABLE IF NOT EXISTS `effigy`.`media` (
   CONSTRAINT `FP_EXTENSION`
     FOREIGN KEY (`EXTENSION`)
     REFERENCES `effigy`.`supported_ext` (`EXTENSION`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_MEDIA_TYPE_ID`
+    FOREIGN KEY (`MEDIA_TYPE_ID`)
+    REFERENCES `effigy`.`media_type` (`MEDIA_TYPE_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_FOLDER1_ID`
+    FOREIGN KEY (`FOLDER_ID`)
+    REFERENCES `effigy`.`loc_folder` (`FOLDER_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
