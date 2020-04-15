@@ -23,7 +23,7 @@ USE `effigy` ;
 DROP TABLE IF EXISTS `effigy`.`attrib` ;
 
 CREATE TABLE IF NOT EXISTS `effigy`.`attrib` (
-  `ATRIB_ID` INT(11) NOT NULL,
+  `ATRIB_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `WIDTH` INT(11) NULL DEFAULT NULL,
   `HEIGHT` INT(11) NULL DEFAULT NULL,
   `CAMERA` VARCHAR(70) NULL DEFAULT NULL,
@@ -68,7 +68,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 DROP TABLE IF EXISTS `effigy`.`loc_folder` ;
 
 CREATE TABLE IF NOT EXISTS `effigy`.`loc_folder` (
-  `FOLDER_ID` INT(11) NOT NULL,
+  `FOLDER_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `ROOT_ID` INT(11) NOT NULL,
   `ROOT` VARCHAR(500) NOT NULL,
   `FOLDER` VARCHAR(100) NOT NULL,
@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `effigy`.`loc_folder` (
   PRIMARY KEY (`FOLDER_ID`),
   UNIQUE INDEX `LOC_FID_UNIQUE` (`FOLDER_ID` ASC) VISIBLE,
   INDEX `FK_ROOT_ID_idx` (`ROOT_ID` ASC) VISIBLE,
+  UNIQUE INDEX `FOLDER_PATH_UNIQUE` (`FOLDER_PATH` ASC) VISIBLE,
   CONSTRAINT `FK_ROOT_ID`
     FOREIGN KEY (`ROOT_ID`)
     REFERENCES `effigy`.`loc_root` (`ROOT_ID`)
@@ -102,6 +103,18 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `effigy`.`supported_ext`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `effigy`.`supported_ext` ;
+
+CREATE TABLE IF NOT EXISTS `effigy`.`supported_ext` (
+  `EXTENSION` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`EXTENSION`),
+  UNIQUE INDEX `SUPPORTED_TYPE_ID_UNIQUE` (`EXTENSION` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `effigy`.`media`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `effigy`.`media` ;
@@ -118,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `effigy`.`media` (
   `SHORT_DESC` VARCHAR(100) NULL,
   `DESC` VARCHAR(300) NULL,
   `FAV_COUNT` INT(11) NULL,
+  `EXTENSION` VARCHAR(10) NOT NULL,
   `UPDATE_DT` DATE NULL DEFAULT NULL,
   `INSERTED_DT` DATE NOT NULL,
   PRIMARY KEY (`MEDIA_ID`),
@@ -126,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `effigy`.`media` (
   INDEX `FK_TYPE_ID_idx` (`TYPE_ID` ASC) VISIBLE,
   INDEX `FP_FOLDER_ID_idx` (`FOLDER_ID` ASC) VISIBLE,
   INDEX `FP_PARENT_FOLDER_ID_idx` (`PARENT_FOLDER_ID` ASC) VISIBLE,
+  INDEX `FP_EXTENSION_idx` (`EXTENSION` ASC) VISIBLE,
   CONSTRAINT `FK_MEDIA_ATRIB`
     FOREIGN KEY (`ATRIB_ID`)
     REFERENCES `effigy`.`attrib` (`ATRIB_ID`),
@@ -142,6 +157,11 @@ CREATE TABLE IF NOT EXISTS `effigy`.`media` (
   CONSTRAINT `FP_PARENT_FOLDER_ID`
     FOREIGN KEY (`PARENT_FOLDER_ID`)
     REFERENCES `effigy`.`loc_folder` (`FOLDER_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FP_EXTENSION`
+    FOREIGN KEY (`EXTENSION`)
+    REFERENCES `effigy`.`supported_ext` (`EXTENSION`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -212,6 +232,51 @@ CREATE TABLE IF NOT EXISTS `effigy`.`favourites` (
     REFERENCES `effigy`.`fav_type` (`FAV_TYPE_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `effigy`.`collection_year`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `effigy`.`collection_year` ;
+
+CREATE TABLE IF NOT EXISTS `effigy`.`collection_year` (
+  `COLLECTION_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `FOLDER_ID` INT(11) NOT NULL,
+  `YEAR` DATE NULL,
+  `PERCANTEGE` INT(11) NULL,
+  PRIMARY KEY (`COLLECTION_ID`),
+  UNIQUE INDEX `COLLECTION_ID_UNIQUE` (`COLLECTION_ID` ASC) VISIBLE,
+  INDEX `FK_FOLDER_ID_idx` (`FOLDER_ID` ASC) VISIBLE,
+  CONSTRAINT `FK_FOLDER_ID`
+    FOREIGN KEY (`FOLDER_ID`)
+    REFERENCES `effigy`.`loc_folder` (`FOLDER_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `effigy`.`skip_root`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `effigy`.`skip_root` ;
+
+CREATE TABLE IF NOT EXISTS `effigy`.`skip_root` (
+  `SKIP_ROOT_ID` INT NOT NULL AUTO_INCREMENT,
+  `SKIP_ROOT` VARCHAR(500) NULL,
+  UNIQUE INDEX `SKIP_ROOT_ID_UNIQUE` (`SKIP_ROOT_ID` ASC) VISIBLE,
+  PRIMARY KEY (`SKIP_ROOT_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `effigy`.`excluded_ext`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `effigy`.`excluded_ext` ;
+
+CREATE TABLE IF NOT EXISTS `effigy`.`excluded_ext` (
+  `EXTENSION` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`EXTENSION`))
 ENGINE = InnoDB;
 
 
