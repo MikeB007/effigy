@@ -1,10 +1,13 @@
+
+delete  from attrib;
+delete from media;
 delete from loc_folder;
 delete from loc_root;
 DELETE FROM media_type_ext;
 delete from supported_ext;
 DELETE FROM media_type;
 delete from skip_root;
-delete from media;
+
 
 -- INSERT MEDIATYPES
 insert into media_type values('P','PICTURE');
