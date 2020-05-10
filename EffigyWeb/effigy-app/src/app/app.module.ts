@@ -13,6 +13,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FolderDetailsComponent } from './folder-details/folder-details.component';
 
+import { SafeurlPipe } from './safe-url.pipe';
+
 const appRoutes: Routes = [
   {
     path: 'folders',
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
     AppComponent,
     FoldersComponent,
     FolderDetailsComponent,
+    SafeurlPipe,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
