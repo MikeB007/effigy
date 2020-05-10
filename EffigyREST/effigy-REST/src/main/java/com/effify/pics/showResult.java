@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
 import java.sql.*;
 
 public class showResult {
-
+    static Config c;
 
     public static String getLocations() {
         return("Data");
@@ -34,8 +34,7 @@ public class showResult {
     Connection conn = null;
 		try {
         conn =
-                DriverManager.getConnection("jdbc:mysql://localhost/effigy?" +
-                        "user=user&password=password");
+                DriverManager.getConnection(c.getConnectionString());
 
     } catch (
     SQLException ex) {
@@ -120,9 +119,7 @@ public class showResult {
         }
         Connection conn = null;
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/effigy?" +
-                            "user=user&password=password");
+            conn = DriverManager.getConnection(c.getConnectionString());
 
         } catch (
                 SQLException ex) {
@@ -207,10 +204,7 @@ public class showResult {
         }
         Connection conn = null;
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/effigy?" +
-                            "user=user&password=password");
-
+            conn = DriverManager.getConnection(c.getConnectionString());
         } catch (
                 SQLException ex) {
             // handle any errors
@@ -295,13 +289,11 @@ public class showResult {
         }
         Connection conn = null;
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/effigy?" +
-                            "user=user&password=password");
-
+            conn = DriverManager.getConnection(c.getConnectionString());
         } catch (
                 SQLException ex) {
             // handle any errors
+            System.out.println("oops");
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
