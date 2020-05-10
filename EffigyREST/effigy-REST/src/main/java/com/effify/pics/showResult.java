@@ -315,7 +315,7 @@ public class showResult {
         try {
             stmt = conn.createStatement();
             if (year == 0 ) {
-                 sql = "select distinct(YEAR(dttaken))  as THIS_YEAR,COUNT(*) as TOTAL  from media M WHERE YEAR(dttaken) >1969 GROUP BY YEAR(dttaken) order by THIS_YEAR DESC";
+                 sql = "select distinct(YEAR(dttaken))  as THIS_YEAR,COUNT(*) as TOTAL  from media M  GROUP BY YEAR(dttaken) order by THIS_YEAR DESC";
             }
             else{
                  sql = "select substring(M.media_key,10) as urlLink, M.* ,MA.* from media M, ATTRIB MA  WHERE M.MEDIA_ID = MA.MEDIA_ID AND YEAR(M.dttaken) =" + year + " ORDER BY M.DTTAKEN ASC LIMIT 5";
