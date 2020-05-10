@@ -1,0 +1,8 @@
+<h2>Folder List</h2>
+<ul class="folders">
+  <li *ngFor="let p of folders; let i=index;">
+    <a routerLink="{{p.FOLDER_ID}}">
+      <span class="folder">{{i+1}}</span> {{p.FOLDER}}
+    </a>
+  </li>
+</ul>

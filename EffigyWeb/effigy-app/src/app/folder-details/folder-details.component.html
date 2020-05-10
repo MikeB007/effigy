@@ -1,0 +1,9 @@
+<h2>Folder Details</h2>
+<ul class="foldersS">
+  <li *ngFor="let p of media; let i=index;">
+    <a routerLink="/loc/folder/image/{{p.MEDIA_ID}}">
+      <span class="folder">{{i+1}}</span> {{p.NAME}}
+      <img src="{{p.MEDIA_KEY}} | safe"  height="42" width="42">
+    </a>
+  </li>
+</ul>
