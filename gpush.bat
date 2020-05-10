@@ -1,3 +1,4 @@
+COPY C:\Users\user\effigyDraftsync.ipynb C:\GIT_REPOSITORY\REPO\effigy\EffigySync
 git add *
 git status
 set dt = date /T
