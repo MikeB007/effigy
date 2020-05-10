@@ -219,7 +219,7 @@ public class showResult {
 
         try {
             stmt = conn.createStatement();
-            String sql = "select substring(M.media_key,10) as urlLink, M.* ,MA.* from media M, attib MA WHERE M.MEDIA_ID = MA.MEDIA_ID AND M.folder_id = " + folder;
+            String sql = "select substring(M.media_key,10) as urlLink, M.* ,MA.* from media M, attrib MA WHERE M.MEDIA_ID = MA.MEDIA_ID AND M.folder_id = " + folder;
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
             System.out.println("Finished DB call");
@@ -310,7 +310,7 @@ public class showResult {
                  sql = "select distinct(YEAR(dttaken))  as THIS_YEAR,COUNT(*) as TOTAL  from media M  GROUP BY YEAR(dttaken) order by THIS_YEAR DESC";
             }
             else{
-                 sql = "select substring(M.media_key,10) as urlLink, M.* ,MA.* from media M, ATTRIB MA  WHERE M.MEDIA_ID = MA.MEDIA_ID AND YEAR(M.dttaken) =" + year + " ORDER BY M.DTTAKEN ASC LIMIT 5";
+                 sql = "select substring(M.media_key,10) as urlLink, M.* ,MA.* from media M, ATTRIB MA  WHERE M.MEDIA_ID = MA.MEDIA_ID AND YEAR(M.dttaken) =" + year + " ORDER BY M.DTTAKEN ASC LIMIT 30";
             }
             System.out.println(sql);
             rs = stmt.executeQuery(sql);

@@ -1,9 +1,9 @@
 <h2>Folder Details</h2>
-<ul class="foldersS">
+<ul class="years">
   <li *ngFor="let p of media; let i=index;">
     <a routerLink="/loc/folder/image/{{p.MEDIA_ID}}">
       <span class="folder">{{i+1}}</span> {{p.NAME}}
-      <img src="http://192.168.0.109:8080{{p.urlLink}}" style="width:{{p.width/2}}px;height:{{p.height/2}}px;">
+      <img src="http://192.168.0.109:8080{{p.urlLink}}" style="width:{{p.width/4}}px;height:{{p.height/4}}px;">
     </a>
   </li>
 </ul>

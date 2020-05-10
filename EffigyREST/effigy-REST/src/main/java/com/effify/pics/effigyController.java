@@ -48,10 +48,10 @@ public class effigyController {
                 return (showResult.getYears(0));
         }
         @CrossOrigin
-        @GetMapping("/years/{year}")
-        public JSONArray getMediabyYear(@PathVariable int year) {
-                System.out.println("getting images for  year:" + year);
-                return (showResult.getYears(year));
+        @GetMapping("/years/{id}")
+        public JSONArray getMediabyYear(@PathVariable int id) {
+                System.out.println("getting images for  year:" + id);
+                return (showResult.getYears(id));
         }
 
 }

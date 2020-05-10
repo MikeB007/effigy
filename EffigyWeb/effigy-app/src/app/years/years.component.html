@@ -1,0 +1,8 @@
+<h2>Year List</h2>
+<ul class="years">
+  <li *ngFor="let p of years; let i=index;">
+    <a routerLink="{{p.THIS_YEAR}}">
+      <span class="year"></span> {{p.THIS_YEAR}}-{{p.TOTAL}}
+    </a>
+  </li>
+</ul>
