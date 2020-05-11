@@ -1,16 +1,13 @@
-package com.effify.pics;
+package com.effigy.pics;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.effify.pics.showResult;
 import org.json.simple.JSONArray;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.sql.ResultSet;
 
 
 @RestController
@@ -54,7 +51,7 @@ public class effigyController {
                 return (showResult.getYears(id));
         }
         @CrossOrigin
-        @GetMapping("/media/{id}")
+        @GetMapping("/mediaID/{id}")
         public JSONArray getMediaById(@PathVariable int id) {
                 System.out.println("getting media for id:" + id);
                 return (showResult.getSingleMedia(id));
@@ -62,7 +59,7 @@ public class effigyController {
 
         //This
         @CrossOrigin
-        @GetMapping("/medias/{name}")
+        @GetMapping("/mediaName/{name}")
         public JSONArray getMediaeByName(@PathVariable String name) {
                 System.out.println("getting meida by the name:" + name);
                 return (showResult.getSingleMedia(name));
@@ -81,5 +78,12 @@ public class effigyController {
         public JSONArray getTimelineByYear(@PathVariable int id) {
                 System.out.println("getting timeline by the year or all:" + id);
                 return (showResult.getTimeline(id));
+        }
+        //This
+        @CrossOrigin
+        @GetMapping("/timeline/{year}/{month}")
+        public JSONArray getTimelineByYear(@PathVariable int year, @PathVariable int month) {
+                System.out.println("getting timeline by the year month:");
+                return (showResult.getTimelinebyYYYYMM(year, month));
         }
 }

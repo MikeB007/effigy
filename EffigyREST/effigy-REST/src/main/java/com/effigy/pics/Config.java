@@ -1,4 +1,4 @@
-package com.effify.pics;
+package com.effigy.pics;
 
 public class Config {
     static String USER = "mediaUser";

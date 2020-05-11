@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TimelineService} from '../timeline.service';
 
 @Component({
   selector: 'app-timeline',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimelineComponent implements OnInit {
 
-  constructor() { }
+  timeline: any = [];
 
-  ngOnInit(): void {
+  constructor(public rest: TimelineService, private route: ActivatedRoute, private router: Router) { }
+  ngOnInit() {
+    this.rest.getTimeline(this.route.snapshot.params['id']).subscribe((data: {}) => {
+      console.log(data);
+      this.timeline = data;
+    });
   }
-
 }

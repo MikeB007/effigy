@@ -18,6 +18,7 @@ import { YearsComponent } from './years/years.component';
 import { YearsDetailsComponent } from './years-details/years-details.component';
 import { MediaPlayerComponent } from './media-player/media-player.component';
 import { TimelineComponent } from './timeline/timeline.component';
+import { TimelineDetailsComponent } from './timeline-details/timeline-details.component';
 
 const appRoutes: Routes = [
   {
@@ -45,6 +46,21 @@ const appRoutes: Routes = [
     component: MediaPlayerComponent,
     data: { title: 'Showing movie' }
   },
+  {
+    path: 'timeline/:id',
+    component: TimelineComponent,
+    data: { title: 'Showing Full timeline' }
+  },
+  {
+  path: 'timeline',
+  component: TimelineComponent,
+  data: { title: 'Showing timeline' }
+  },
+  {
+    path: 'timeline/:id/:id2',
+    component: TimelineDetailsComponent,
+    data: { title: 'Showing Specific details by Year Month' }
+  },
 
 ];
 
@@ -58,6 +74,7 @@ const appRoutes: Routes = [
     YearsDetailsComponent,
     MediaPlayerComponent,
     TimelineComponent,
+    TimelineDetailsComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

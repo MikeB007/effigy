@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class TimelineService {
+export class TimelineDetailsService {
 
   constructor(private http: HttpClient) { }
 
@@ -14,12 +14,8 @@ export class TimelineService {
     const body = res;
     return body || { };
   }
-  getTimelineAll(): Observable<any> {
-    return this.http.get(endpoint).pipe(
-      map(this.extractData));
-  }
-  getTimeline(id): Observable<any> {
-    return this.http.get(endpoint + '/' + id).pipe(map(this.extractData));
+  getTimelinebyYearMonth(id, id2): Observable<any> {
+    return this.http.get(endpoint + '/' + id + '/' + id2).pipe(map(this.extractData));
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
