@@ -72,7 +72,7 @@ public class effigyController {
         @CrossOrigin
         @GetMapping("/timeline")
         public JSONArray getTimelineFull() {
-                System.out.println("get full timeline);
+                System.out.println("get full timeline");
                 return (showResult.getTimeline(0));
         }
         //This
