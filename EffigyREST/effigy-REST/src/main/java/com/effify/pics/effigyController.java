@@ -53,5 +53,19 @@ public class effigyController {
                 System.out.println("getting images for  year:" + id);
                 return (showResult.getYears(id));
         }
+        @CrossOrigin
+        @GetMapping("/media/{id}")
+        public JSONArray getMediaById(@PathVariable int id) {
+                System.out.println("getting media for id:" + id);
+                return (showResult.getSingleMedia(id));
+        }
+
+        //This
+        @CrossOrigin
+        @GetMapping("/medias/{name}")
+        public JSONArray getMediaeByName(@PathVariable String name) {
+                System.out.println("getting meida by the name:" + name);
+                return (showResult.getSingleMedia(name));
+        }
 
 }
