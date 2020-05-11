@@ -68,4 +68,18 @@ public class effigyController {
                 return (showResult.getSingleMedia(name));
         }
 
+        //This
+        @CrossOrigin
+        @GetMapping("/timeline")
+        public JSONArray getTimelineFull() {
+                System.out.println("get full timeline);
+                return (showResult.getTimeline(0));
+        }
+        //This
+        @CrossOrigin
+        @GetMapping("/timeline/{id}")
+        public JSONArray getTimelineByYear(@PathVariable int id) {
+                System.out.println("getting timeline by the year or all:" + id);
+                return (showResult.getTimeline(id));
+        }
 }

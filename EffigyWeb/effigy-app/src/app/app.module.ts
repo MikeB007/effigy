@@ -17,6 +17,7 @@ import { SafeurlPipe } from './safe-url.pipe';
 import { YearsComponent } from './years/years.component';
 import { YearsDetailsComponent } from './years-details/years-details.component';
 import { MediaPlayerComponent } from './media-player/media-player.component';
+import { TimelineComponent } from './timeline/timeline.component';
 
 const appRoutes: Routes = [
   {
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
     YearsComponent,
     YearsDetailsComponent,
     MediaPlayerComponent,
+    TimelineComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
