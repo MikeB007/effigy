@@ -1,1 +1,45 @@
-<p>media-player works!</p>
+<div>
+  <script>
+    var myVideo = document.getElementById("video1");
+
+    function playPause() {
+      if (myVideo.paused)
+        myVideo.play();
+      else
+        myVideo.pause();
+    }
+
+    function makeBig() {
+      myVideo.width = 560;
+    }
+
+    function makeSmall() {
+      myVideo.width = 320;
+    }
+
+    function makeNormal() {
+      myVideo.width = 420;
+    }
+  </script>
+
+  <p>media-player works!</p>
+<li *ngFor="let p of media; let i=index;">{{p.urlLink}}<br>
+  <video id="video1" width="400" >
+    <source src="http://192.168.0.111:8080{{p.urlLink}}" type="video/mp4">
+    Your browser does not support HTML video.
+  </video>
+<li>
+</div>
+  <div style="text-align:center">
+    <button onclick="playPause()">Play/Pause</button>
+    <button onclick="makeBig()">Big</button>
+    <button onclick="makeSmall()">Small</button>
+    <button onclick="makeNormal()">Normal</button>
+    <br><br>
+    my test
+    <video id="video2" width="420">
+      <source src="C:\\Users\\user\\Downloads\\movie.mp4" type="video/mp4">
+      Your browser does not support HTML video.
+    </video>
+  </div>
+

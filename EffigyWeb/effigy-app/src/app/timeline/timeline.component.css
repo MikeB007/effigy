@@ -1,13 +1,13 @@
 /* Products Component's private CSS styles */
 .timeline {
   margin: 0 0 2em 0;
-  list-style-type: none;
+  list-style-type: none ;
   padding: 0;
   width: 45em;
 }
 .timline li {
   position: relative;
-  cursor: pointer;
+  cursor: help ;
   background-color: #EEE;
   margin: .5em;
   padding: .3em 0;
@@ -30,12 +30,12 @@
 }
 
 .timeline a:hover {
-  color:#607D8B;
+  color: yellow;
 }
 
 .timeline .time {
   display: inline-block;
-  font-size: small;
+  font-size: xx-large;
   color: white;
   padding: 0.8em 0.7em 0 0.7em;
   background-color: #607D8B;
@@ -45,7 +45,7 @@
   top: -4px;
   height: 1.8em;
   min-width: 16px;
-  text-align: right;
+  text-align: center;
   margin-right: .8em;
   border-radius: 4px 0 0 4px;
 }
@@ -55,13 +55,13 @@ button {
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: help;
   cursor: hand;
   font-family: Arial;
 }
 
 button:hover {
-  background-color: #cfd8dc;
+  background-color: yellow;
 }
 
 button.delete {

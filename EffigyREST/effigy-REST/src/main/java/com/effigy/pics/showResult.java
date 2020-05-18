@@ -402,7 +402,7 @@ public class showResult {
 
         try {
             stmt = conn.createStatement();
-                sql = "select substring(M.media_key,10) as urlLink,     M.*, MA.*  from  MEDIA M LEFT JOIN ATTRIB MA ON M.MEDIA_ID = MA.MEDIA_ID where  MEDIA_ID =" + id;
+                sql = "select substring(M.media_key,10) as urlLink,     M.*, MA.*  from  MEDIA M LEFT JOIN ATTRIB MA ON M.MEDIA_ID = MA.MEDIA_ID where  M.MEDIA_ID =" + id;
 
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
@@ -491,7 +491,7 @@ public class showResult {
 
         try {
             stmt = conn.createStatement();
-            sql = "select substring(M.media_key,10) as urlLink, M.*, MA.*  from  MEDIA M LEFT JOIN ATTRIB MA ON M.MEDIA_ID = MA.MEDIA_ID where  name = '"+name +"'";
+            sql = "select substring(M.media_key,10) as urlLink, M.*, MA.*  from  MEDIA M LEFT JOIN ATTRIB MA ON M.MEDIA_ID = MA.MEDIA_ID where  M.name = '"+name +"'";
 
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
