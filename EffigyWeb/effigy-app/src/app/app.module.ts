@@ -19,6 +19,7 @@ import { YearsDetailsComponent } from './years-details/years-details.component';
 import { MediaPlayerComponent } from './media-player/media-player.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { TimelineDetailsComponent } from './timeline-details/timeline-details.component';
+import { NewsComponent } from './news/news.component';
 
 const appRoutes: Routes = [
   {
@@ -61,7 +62,11 @@ const appRoutes: Routes = [
     component: TimelineDetailsComponent,
     data: { title: 'Showing Specific details by Year Month' }
   },
-
+  {
+    path: 'news',
+    component: NewsComponent,
+    data: { title: 'Showing News' }
+  },
 ];
 
 @NgModule({
@@ -75,6 +80,7 @@ const appRoutes: Routes = [
     MediaPlayerComponent,
     TimelineComponent,
     TimelineDetailsComponent,
+    NewsComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
