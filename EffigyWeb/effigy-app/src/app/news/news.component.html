@@ -1,0 +1,11 @@
+<h2>News List</h2>
+<ul class="news">
+  <li *ngFor="let p of news; let i=index;">
+     <a target="_blank" href="{{p.ARTICLE_URL}}">
+       <span class="news">{{i+1}}</span>
+       <b style="font-size:6em;color:green">({{p.SRC}})</b>&nbsp; <p style="font-size:.6em;color:red">({{p.ARTICLE_DT}}-{{p.ARTICLE_TM}})</p>
+       &nbsp;{{p.LABEL}}
+     </a>
+
+  </li>
+</ul>
