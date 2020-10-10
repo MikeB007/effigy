@@ -90,64 +90,64 @@ public class effigyController {
 
         // ******************  NEWS  ************************
         @CrossOrigin
-        @GetMapping("/news/search/{value}")
+        @GetMapping("/api/news/search/{value}")
         public JSONArray getNewsSearch(@PathVariable String value) {
                 System.out.println("getting news by Keyword");
                 return (searchNews.getLNewsLabels(value));
 
         }
         @CrossOrigin
-        @GetMapping("/news/search/{value}/details")
+        @GetMapping("/api/news/search/{value}/details")
         public JSONArray getNewsSearchDetails(@PathVariable String value) {
                 System.out.println("getting news by Keyword");
                 return (searchNews.getLNewsDetails(value));
 
         }
         @CrossOrigin
-        @GetMapping("/news")
+        @GetMapping("/api/news")
         public JSONArray getNewsDefault() {
                 System.out.println("getting lates news");
                 return (searchNews.getLatestNews(0));
         }
         @CrossOrigin
-        @GetMapping("/news/help")
+        @GetMapping("/api/news/help")
         public String getNewsHelp() {
                 System.out.println("Help");
                 return (searchNews.getNewsHelp(0));
         }
         @CrossOrigin
-        @GetMapping("/news/headlines")
+        @GetMapping("/api/news/headlines")
         public JSONArray getNewsHeadlines() {
                 System.out.println("getting lates news");
                 return (searchNews.getLatestNewsHeadlines(0));
         }
         @CrossOrigin
-        @GetMapping("/news/latest")
+        @GetMapping("/api/news/latest")
         public JSONArray getNewsLatest() {
                 System.out.println("getting lates news");
                 return (searchNews.getLatestNews(0));
         }
         @CrossOrigin
-        @GetMapping("/news/latest/{period}")
+        @GetMapping("/api/news/latest/{period}")
         public JSONArray getNewsLatest(@PathVariable int period) {
                 System.out.println("getting news by Keyword");
                 return (searchNews.getLatestNews(period));
 
         }
         @CrossOrigin
-        @GetMapping("/news/latest/source/{src}")
+        @GetMapping("/api/news/latest/source/{src}")
         public JSONArray getNewsLatestStats(@PathVariable String src) {
                 System.out.println("getting news by source");
                 return (searchNews.getLatestNewsBySource(src));
         }
         @CrossOrigin
-        @GetMapping("/news/stats")
+        @GetMapping("/api/news/stats")
         public JSONArray getNewsLatestStats() {
                 System.out.println("getting news by Keyword");
                 return (searchNews.getLatestNewsStats(0));
         }
         @CrossOrigin
-        @GetMapping("/news/stats/{period}")
+        @GetMapping("/api/news/stats/{period}")
         public JSONArray getNewsLatestStats(@PathVariable int period) {
                 System.out.println("getting news by Keyword");
                 return (searchNews.getLatestNewsStats(period));
