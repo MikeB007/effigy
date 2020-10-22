@@ -34,7 +34,7 @@ export class FolderService {
   }
 }
 
-const endpoint = 'http://localhost:8080/folders';
+const endpoint = 'http://107.190.108.52/api/media/folders';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'

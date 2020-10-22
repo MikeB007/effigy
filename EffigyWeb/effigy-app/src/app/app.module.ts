@@ -22,42 +22,42 @@ import { TimelineDetailsComponent } from './timeline-details/timeline-details.co
 
 const appRoutes: Routes = [
   {
-    path: 'folders',
+    path: 'media/folders',
     component: FoldersComponent,
     data: { title: 'Folder List' }
   },
   {
-    path: 'folders/:id',
+    path: 'media/folders/:id',
     component: FolderDetailsComponent,
     data: { title: 'Folder Details' }
   },
   {
-    path: 'years',
+    path: 'media/years',
     component: YearsComponent,
     data: { title: 'Year List' }
   },
   {
-    path: 'years/:id',
+    path: 'media/years/:id',
     component: YearsDetailsComponent,
     data: { title: 'Year Details' }
   },
   {
-    path: 'media/:id',
+    path: 'media/media/:id',
     component: MediaPlayerComponent,
     data: { title: 'Showing movie' }
   },
   {
-    path: 'timeline/:id',
+    path: 'media/timeline/:id',
     component: TimelineComponent,
     data: { title: 'Showing Full timeline' }
   },
   {
-  path: 'timeline',
+  path: 'media/timeline',
   component: TimelineComponent,
   data: { title: 'Showing timeline' }
   },
   {
-    path: 'timeline/:id/:id2',
+    path: 'media/timeline/:id/:id2',
     component: TimelineDetailsComponent,
     data: { title: 'Showing Specific details by Year Month' }
   },
