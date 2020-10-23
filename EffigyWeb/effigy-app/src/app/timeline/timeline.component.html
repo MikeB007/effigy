@@ -1,0 +1,9 @@
+<h2>Timeline List</h2>
+<ul class="timeline">
+  <li *ngFor="let p of timeline; let i=index;">
+    <a routerLink="/timeline/{{p.TAKEN}}/{{p.THIS_MONTH}}">
+      <span class="time"></span> {{p.TAKEN}}, {{p.MONTH_SHORT}}. -{{p.TOTAL}}  {{p.PATH}}
+    </a>
+  </li>
+</ul>
+
