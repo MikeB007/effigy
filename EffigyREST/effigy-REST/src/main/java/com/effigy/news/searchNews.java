@@ -54,7 +54,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc");
+            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc  limit 200");
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
             // the query will be a SELECT...
@@ -137,7 +137,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc");
+            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc  limit 200");
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
             // the query will be a SELECT...
@@ -220,7 +220,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM,ARTICLE_URL from tradeview.news  where as_of in (select max(as_of) from tradeview.news) order by  extracted_dt desc,article_dt desc limit 2000");
+            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM,ARTICLE_URL from tradeview.news  where as_of in (select max(as_of) from tradeview.news) order by  extracted_dt desc,article_dt desc limit 200");
 
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
@@ -306,7 +306,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news  where as_of in (select max(as_of) from tradeview.news) order by article_dt desc, extracted_dt desc");
+            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news  where as_of in (select max(as_of) from tradeview.news) order by article_dt desc, extracted_dt desc  limit 200");
 
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
@@ -390,7 +390,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  as_of, SRC, COUNT(*)  as Total from tradeview.news  where as_of in (select max(as_of) from tradeview.news) GROUP BY as_of,src  order by 3 desc");
+            rs = stmt.executeQuery("select  as_of, SRC, COUNT(*)  as Total from tradeview.news  where as_of in (select max(as_of) from tradeview.news) GROUP BY as_of,src  order by 3 desc  limit 200");
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
             // the query will be a SELECT...
@@ -473,7 +473,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            sql = "select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news  where src= '" + src + "' and as_of in (select max(as_of) from tradeview.news) order by article_dt desc, extracted_dt desc";
+            sql = "select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news  where src= '" + src + "' and as_of in (select max(as_of) from tradeview.news) order by article_dt desc, extracted_dt desc  limit 200";
             //System.out.println(sql);
             rs = stmt.executeQuery(sql);
             System.out.println("Finished DB call");
@@ -559,7 +559,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            sql = "select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news  where label like '%"  + keyword + "%'  and as_of in (select max(as_of) from tradeview.news) order by article_dt desc, extracted_dt desc";
+            sql = "select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news  where label like '%"  + keyword + "%'  and as_of in (select max(as_of) from tradeview.news) order by article_dt desc, extracted_dt desc  limit 200";
             System.out.println(sql);
             rs = stmt.executeQuery(sql);
             System.out.println("Finished DB call");
@@ -619,5 +619,4 @@ public class searchNews {
         //Connection con =
         return(json);
     }
-
 }

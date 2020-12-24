@@ -3,6 +3,8 @@ package com.effigy.pics;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.effigy.news.searchNews;
+import com.effigy.tradeview.tradeView;
+
 import org.json.simple.JSONArray;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-public class effigyController {
+public class    effigyController {
 
         private static final String template = "Hello, %s!";
         private final AtomicLong counter = new AtomicLong();
@@ -113,10 +115,12 @@ public class effigyController {
         }
         @CrossOrigin
         @GetMapping("/api/news/help")
+
         public String getNewsHelp() {
                 System.out.println("Help");
                 return (searchNews.getNewsHelp(0));
         }
+
         @CrossOrigin
         @GetMapping("/api/news/headlines")
         public JSONArray getNewsHeadlines() {
@@ -172,4 +176,19 @@ public class effigyController {
                 return new ResponseEntity<String>("{\"test\": \"jsonResponseExample\"}", httpHeaders, HttpStatus.OK);
         }
 
+        // ******************  TRADE VIEW DATA  ************************
+
+        @CrossOrigin
+        @GetMapping("/api/tv/help")
+        public String CTRL_getTVHelp() {
+                System.out.println(" Trade View Help");
+                return (tradeView.getTVHelp(0));
+        }
+        @CrossOrigin
+        @GetMapping("/api/tv/stats/{ticker}/{country}")
+        public JSONArray getCTRL_TVStats(@PathVariable String ticker,@PathVariable String country) {
+                System.out.println("getting Trade View Stats by Keyword");
+                return (tradeView.getLTVStats(ticker,country));
+
+        }
 }

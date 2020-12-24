@@ -77,11 +77,16 @@ const appRoutes: Routes = [
     TimelineDetailsComponent,
   ],
   imports: [
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes,
+      {
+        enableTracing: false, // <-- debugging purposes only
+      }),
+    RouterModule.forChild(appRoutes),
     FormsModule,
     BrowserModule,
     HttpClientModule
   ],
+  exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
 })
