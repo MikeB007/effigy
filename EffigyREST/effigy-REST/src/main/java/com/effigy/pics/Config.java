@@ -4,7 +4,7 @@ public class Config {
     static String USER = "mediaUser";
     static String PWD = "password";
     static String DATABASE ="effigy3";
-    static String SERVER="192.168.0.111";
+    static String SERVER="192.168.1.111";
     //static String SERVER="192.168.0.109";
 
     public static String getConnectionString (){

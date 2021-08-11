@@ -92,25 +92,25 @@ public class    effigyController {
 
         // ******************  NEWS  ************************
         @CrossOrigin
-        @GetMapping("/api/news/search/{value}")
-        public JSONArray getNewsSearch(@PathVariable String value) {
+        @GetMapping("/api/news/search/{value}/{range}")
+        public JSONArray getNewsSearch(@PathVariable String value,@PathVariable int range) {
                 System.out.println("getting news by Keyword");
-                return (searchNews.getLNewsLabels(value));
+                return (searchNews.getLNewsLabels(value,range));
 
         }
         
 
         @CrossOrigin
-        @GetMapping("/api/news/search/{value}/details")
-        public JSONArray getNewsSearchDetails(@PathVariable String value) {
+        @GetMapping("/api/news/search/{value}/details/{range}")
+        public JSONArray getNewsSearchDetails(@PathVariable String value,@PathVariable int range) {
                 System.out.println("getting news by Keyword");
-                return (searchNews.getLNewsDetails(value));
+                return (searchNews.getLNewsDetails(value,range));
 
         }
         @CrossOrigin
         @GetMapping("/api/news")
         public JSONArray getNewsDefault() {
-                System.out.println("getting lates news");
+                System.out.println("getting latest news");
                 return (searchNews.getLatestNews(0));
         }
         @CrossOrigin
@@ -168,6 +168,16 @@ public class    effigyController {
                 return (searchNews.getLatestNewsStats(period));
 
         }
+        @CrossOrigin
+        @GetMapping("/api/news/saveFav/{id}")
+
+        public int saveFavourite(@PathVariable int id) {
+                System.out.println("saving Fav");
+                return (searchNews.saveFavourite((id)));
+
+        }
+
+
 
         @RequestMapping(value = "/api/newsj", method = RequestMethod.GET, produces = "application/json")
         public ResponseEntity<String> bar() {

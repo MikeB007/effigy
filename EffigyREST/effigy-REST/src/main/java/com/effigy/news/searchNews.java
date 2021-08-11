@@ -27,18 +27,18 @@ public class searchNews {
         return (help);
     }
 
-
-    public static JSONArray getLNewsLabels(String keyword) {
-
+    public static JSONArray getLNewsLabels(String keyword,int range) {
+        int j =0;
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         } catch (Exception ex) {
             // handle the error
+            System.out.println("Driver not found");
         }
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(c.getConnectionString());
-            conn = DriverManager.getConnection(c.getConnectionString());
+           // conn = DriverManager.getConnection(c.getConnectionString());
 
         } catch (
                 SQLException ex) {
@@ -54,16 +54,18 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc  limit 200");
+//            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where as_of >= curdate() - " + range + " and label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc  limit 200");
+            rs = stmt.executeQuery("select  n.ID, n.label,n.src, date_format(n.as_of, '%a %b %D') as ARTICLE_DT , date_format(n.as_of,'%r') as ARTICLE_TM, n.ARTICLE_URL,NF.fav_ID as fav_ID from tradeview.news N left outer join tradeview.news_favourites NF on N.ID=NF.fav_id where n.as_of >= curdate() - - " + range + " and n.label like '%" + keyword + "%' ORDER BY n.as_of DESC, n.article_dt desc, n.extracted_dt desc  limit 200");
+
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
             // the query will be a SELECT...
             //if (stmt.execute("SELECT foo FROM bar")) {
             //	rs = stmt.getResultSet();
             //}
-
             ResultSetMetaData rsmd = rs.getMetaData();
             while (rs.next()) {
+                j++;
                 int numColumns = rsmd.getColumnCount();
                 JSONObject obj = new JSONObject();
                 // for (int i=numColumns; i>1; i--) {
@@ -109,10 +111,128 @@ public class searchNews {
         }
         System.out.println("Converted to json");
         //Connection con =
+        if (j>0)
+        {
+            saveKeyword (keyword, j);
+        }
         return (json);
     }
 
-    public static JSONArray getLNewsDetails(String keyword) {
+    private static void saveKeyword(String keyword,int count) {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        } catch (Exception ex) {
+            // handle the error
+            System.out.println("Driver not found");
+        }
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(c.getConnectionString());
+            // conn = DriverManager.getConnection(c.getConnectionString());
+
+        } catch (
+                SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        JSONArray json = new JSONArray();
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate("insert into tradeview.news_keywords (keyword,search_dt,favourite,results)  values ('" + keyword + "',now(),1," + count + ")");
+            System.out.println("Finished DB call");
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+            // it is a good idea to release
+            // resources in a finally{} block
+            // in reverse-order of their creation
+            // if they are no-longer needed
+
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+
+                stmt = null;
+            }
+        }
+        System.out.println("saved keyword:"+ keyword);
+        //Connection con =
+        return ;
+    }
+
+
+    public static int saveFavourite(int id) {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        } catch (Exception ex) {
+            // handle the error
+            System.out.println("Driver not found");
+        }
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(c.getConnectionString());
+            // conn = DriverManager.getConnection(c.getConnectionString());
+
+        } catch (
+                SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        JSONArray json = new JSONArray();
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate("insert into tradeview.news_favourites (fav_id,added_dt)  values (" + id + ",now())");
+            System.out.println("Finished Insert Fav Call");
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        } finally {
+            // it is a good idea to release
+            // resources in a finally{} block
+            // in reverse-order of their creation
+            // if they are no-longer needed
+
+
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) {
+                } // ignore
+
+                stmt = null;
+            }
+        }
+        System.out.println("saved favourite:"+ id);
+        //Connection con =
+        return 0;
+    }
+
+
+    public static JSONArray getLNewsDetails(String keyword,int range) {
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -137,7 +257,7 @@ public class searchNews {
 
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc  limit 200");
+            rs = stmt.executeQuery("select  ID, label,src, date_format(as_of, '%a %b %D') as ARTICLE_DT , date_format(as_of,'%r') as ARTICLE_TM, ARTICLE_URL from tradeview.news where as_of >= curdate() - " + range + " and label like '%" + keyword + "%' ORDER BY as_of DESC, article_dt desc, extracted_dt desc  limit 200");
             System.out.println("Finished DB call");
             // or alternatively, if you don't know ahead of time that
             // the query will be a SELECT...

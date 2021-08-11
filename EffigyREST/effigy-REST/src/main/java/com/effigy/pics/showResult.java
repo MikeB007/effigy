@@ -24,7 +24,7 @@ public class showResult {
     public static JSONArray getTable(String table) {
 
    try {
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
     } catch (Exception ex) {
         // handle the error
     }
