@@ -96,9 +96,15 @@ public class    effigyController {
         public JSONArray getNewsSearch(@PathVariable String value,@PathVariable int range) {
                 System.out.println("getting news by Keyword");
                 return (searchNews.getLNewsLabels(value,range));
-
         }
-        
+
+
+        @CrossOrigin
+        @GetMapping("/api/news/get/keywords")
+        public JSONArray getKeywordsWeb() {
+                System.out.println("getting keywords  keyword");
+                return (searchNews.getKeywords());
+        }
 
         @CrossOrigin
         @GetMapping("/api/news/search/{value}/details/{range}")
