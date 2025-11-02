@@ -100,10 +100,10 @@ public class    effigyController {
 
 
         @CrossOrigin
-        @GetMapping("/api/news/get/keywords")
-        public JSONArray getKeywordsWeb() {
-                System.out.println("getting keywords  keyword");
-                return (searchNews.getKeywords());
+        @GetMapping("/api/news/get/keywords/{kType}")
+        public JSONArray getKeywordsWeb(@PathVariable int kType) {
+                System.out.println("getting keywords  keyword  kType  0 - popular  1- recent");
+                return (searchNews.getKeywords(kType));
         }
 
         @CrossOrigin
@@ -207,4 +207,12 @@ public class    effigyController {
                 return (tradeView.getLTVStats(ticker,country));
 
         }
+        @CrossOrigin
+        @GetMapping("/api/tv/profile/{keyword}")
+        public JSONArray getCTRL_CompanyProfile(@PathVariable String keyword) {
+                System.out.println("getting company profile by Keyword");
+                return (tradeView.getCompanyProfile(keyword));
+
+        }
 }
+

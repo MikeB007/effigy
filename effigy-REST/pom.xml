@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.effigy</groupId>
+	<artifactId>media</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>media</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<!-- Maven Assembly Plugin for creating deployment packages -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/deployment.xml</descriptor>
+					</descriptors>
+					<finalName>effigy-rest-deployment-${project.version}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+					<outputDirectory>${project.basedir}/deployment/dist</outputDirectory>
+				</configuration>
+			</plugin>
+			
+			<!-- Maven Antrun Plugin for custom distribution tasks -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<!-- Distribution Profile -->
+		<profile>
+			<id>dist</id>
+			<build>
+				<plugins>
+					<!-- Ensure clean compile and package -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>compile</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- Run tests -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- Create deployment directory and copy files -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>create-deployment-package</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<echo message="🚀 Creating deployment package..."/>
+										
+										<!-- Clean and create deployment directories -->
+										<delete dir="${project.basedir}/deployment/staging" quiet="true"/>
+										<mkdir dir="${project.basedir}/deployment/staging"/>
+										<mkdir dir="${project.basedir}/deployment/dist"/>
+										
+										<!-- Copy application JAR -->
+										<copy file="${project.build.directory}/${project.build.finalName}.jar" 
+											  todir="${project.basedir}/deployment/staging"/>
+										
+										<!-- Copy configuration files -->
+										<copy file="${project.basedir}/deployment/application-production.properties" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy SSL certificate -->
+										<copy file="${project.basedir}/deployment/keystore.p12" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy deployment scripts -->
+										<copy file="${project.basedir}/deployment/deploy-to-base.ps1" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy transfer scripts -->
+										<copy file="${project.basedir}/deployment/transfer-to-base.ps1" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy verification scripts -->
+										<copy file="${project.basedir}/deployment/verify-deployment.ps1" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy run script -->
+										<copy file="${project.basedir}/deployment/RUN_REST_API.CMD" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy Linux run script -->
+										<copy file="${project.basedir}/deployment/run_rest_api.sh" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										
+										<!-- Copy documentation -->
+										<copy file="${project.basedir}/deployment/DEPLOYMENT.md" 
+											  todir="${project.basedir}/deployment/staging" 
+											  failonerror="false"/>
+										<copy file="${project.basedir}/README-DEPLOYMENT.md" 
+											  tofile="${project.basedir}/deployment/staging/README.md" 
+											  failonerror="false"/>
+										
+										<echo message="📦 Files copied to deployment staging directory"/>
+										
+										<!-- Create ZIP package in dist folder -->
+										<zip destfile="${project.basedir}/deployment/dist/effigy-rest-deployment-package-${project.version}.zip">
+											<fileset dir="${project.basedir}/deployment/staging"/>
+										</zip>
+										
+										<echo message="✅ Deployment package created: deployment/dist/effigy-rest-deployment-package-${project.version}.zip"/>
+										<echo message="🎉 Distribution complete!"/>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

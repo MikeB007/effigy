@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 
+                              http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+    <id>deployment</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    
+    <fileSets>
+        <!-- Include the main JAR file -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>${project.build.finalName}.jar</include>
+            </includes>
+        </fileSet>
+        
+        <!-- Include configuration files -->
+        <fileSet>
+            <directory>${project.basedir}/deployment</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>application-production.properties</include>
+                <include>keystore.p12</include>
+                <include>deploy-to-base.ps1</include>
+                <include>transfer-to-base.ps1</include>
+                <include>verify-deployment.ps1</include>
+                <include>RUN_REST_API.CMD</include>
+                <include>run_rest_api.sh</include>
+                <include>DEPLOYMENT.md</include>
+            </includes>
+        </fileSet>
+        
+        <!-- Include deployment documentation -->
+        <fileSet>
+            <directory>${project.basedir}/deployment</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
