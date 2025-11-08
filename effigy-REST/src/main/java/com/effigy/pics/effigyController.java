@@ -22,8 +22,14 @@ public class    effigyController {
         @GetMapping("/")
         public  String sr(@RequestParam(value = "name", defaultValue = "World") String name) {
                 System.out.println("Request");
-                return (showResult.getLocations());
+                return "Effigy REST API is running! Version 0.0.1-SNAPSHOT";
         }
+        
+        @GetMapping("/health")
+        public String health() {
+                return "OK";
+        }
+        
         @GetMapping("/table")
         public JSONArray getTables(@RequestParam(value = "table", defaultValue = "World") String table) {
                 System.out.println("Request2");
